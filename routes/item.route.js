@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/additem", upload.single("image"), async (req, res, next) => {
+router.post("/add-item", upload.single("image"), async (req, res, next) => {
   try {
     let { title, description, retailPrice, wholesalePrice, qty, tags, image } =
       req.body;
