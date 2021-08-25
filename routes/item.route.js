@@ -4,15 +4,15 @@ const Item = require("../models/item.model");
 const mongoose = require("mongoose");
 const path = require("path");
 
-// const storage = multer.diskStorage({
-//   destination: (req, file, callback) => {
-//     callback(null, path.join(__dirname, "../../public/assets/uploads"));
-//   },
-//   filename: (req, file, callback) => {
-//     callback(null, file.originalname);
-//   },
-// });
-// const upload = multer({ storage: storage });
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, path.join(__dirname, "../../public/assets/uploads"));
+  },
+  filename: (req, file, callback) => {
+    callback(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 router.get("/", async (req, res, next) => {
   try {
@@ -22,9 +22,8 @@ router.get("/", async (req, res, next) => {
     res.status(404).json({ error: err.message });
   }
 });
-// router.post("/add-item", upload.single("image"), async (req, res, next) => {
 
-router.post("/add-item", async (req, res, next) => {
+router.post("/add-item", upload.single("image"), async (req, res, next) => {
   try {
     let { title, description, retailPrice, wholesalePrice, qty, tags, image } =
       req.body;
@@ -46,7 +45,7 @@ router.post("/add-item", async (req, res, next) => {
       wholesalePrice: wholesalePrice,
       qty: qty,
       tags: tags,
-      // image: req.file.originalname,
+      image: req.file.originalname,
     });
     const savedItem = await newItem.save();
     res.json({ msg: "Added new item", savedItem });

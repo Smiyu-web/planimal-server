@@ -22,10 +22,10 @@ const itemSchema = new mongoose.Schema({
     required: true,
   },
   tags: { type: [Object], blackbox: true },
-  // image: {
-  //   type: String,
-  //   require: true,
-  // },
+  image: {
+    type: String,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("Item", itemSchema);
